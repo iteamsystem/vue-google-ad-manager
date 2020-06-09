@@ -16,9 +16,22 @@
             size: {},
             slotType: {
                 default: 'normal'
+            },
+            // add by iteam
+            costomSizes: {
+                default: () => {[320, 50]}
+            },
+            // add by iteam
+            targetings: {
+                default: () => {[]}
             }
         },
-
+        data() {
+            return {
+                // add by iteam
+                slot: null
+            }
+        },
         computed: {
             adUnit(){
                 return `/${this.$googlead.id}/${this.unit}`
@@ -30,6 +43,8 @@
                 return this.size
             },
             sizes(){
+                // add customSizes by iteam
+                if (this.costomSizes) return this.costomSizes
                 try {
                     return this.$googlead.sizes[this.adSize];
                 } catch(e){
@@ -41,7 +56,9 @@
                 try {
                     return this.$googlead.mappings[this.adSize]
                 } catch(e) {
-                    console.error(`Mappings for ${this.adSize} ad size is not defined`)
+                    // del by item
+                    // console.error(`Mappings for ${this.adSize} ad size is not defined`)
+                    return null
                 }
             }
         },
@@ -61,7 +78,15 @@
                 return this.defineSlot();
             },
             defineSlot(){
-                googletag.defineSlot(this.adUnit, this.sizes, this.id).defineSizeMapping(this.mapping).addService(googletag.pubads());
+                // change by iteam
+                this.slot = googletag.defineSlot(this.adUnit, this.sizes, this.id).addService(googletag.pubads());
+                if (this.mapping) {
+                    this.slot.defineSizeMapping(this.mapping)
+                }
+                this.targetings.forEach(elm => {
+                    googletag.pubads().setTargeting(elm.key, elm.val);
+                });
+
             },
             defineOutOfPageSlot(){
                 googletag.defineOutOfPageSlot(this.adUnit, this.id).addService(googletag.pubads())

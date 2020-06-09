@@ -23,14 +23,19 @@ export default {
         googletag.cmd = googletag.cmd || [];
 
         // Create script reference to google ad manager
-        let googleScript = document.createElement('script');
-        googleScript.async = true;
-        googleScript.type = 'text/javascript';
-        googleScript.src = 'https://www.googletagservices.com/tag/js/gpt.js'
-
-        // Reference head of document
-        var head = document.getElementsByTagName('head')[0];
-        head.appendChild(googleScript)
+        // Consider Off duplication mod by iteam
+        if (!document.getElementById('cx-gtm-js')) {
+            let googleScript = document.createElement('script');
+            googleScript.async = true;
+            googleScript.type = 'text/javascript';
+            // googleScript.src = 'https://www.googletagservices.com/tag/js/gpt.js'
+            googleScript.src = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js' // change Url by iteam
+            googleScript.id = 'cx-gtm-js' // add by iteam
+    
+            // Reference head of document
+            var head = document.getElementsByTagName('head')[0];
+            head.appendChild(googleScript)
+        }
 
         // Define google tag slots
         googletag.cmd.push(() => {
@@ -58,7 +63,10 @@ export default {
         }
 
         // Required. User must pass in mappings object
-        options.mappings = this.createMappings(options.mappings);
+        // for not required change by iteam
+        if(options.mappings){
+            options.mappings = this.createMappings(options.mappings);
+        }
         
         // Set googlead options to use in Ad
         Vue.prototype.$googlead = options;
