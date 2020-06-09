@@ -18,6 +18,10 @@
                 default: 'normal'
             },
             // add by iteam
+            id: {
+                default: ''
+            },
+            // add by iteam
             costomSizes: {
                 default: () => {[320, 50]}
             },
@@ -34,7 +38,9 @@
         },
         computed: {
             adUnit(){
-                return `/${this.$googlead.id}/${this.unit}`
+                // change by iteam
+                return this.id ? `/${this.id}/${this.unit}` : `/${this.$googlead.id}/${this.unit}`
+                // return `/${this.$googlead.id}/${this.unit}`
             },
             adSize(){
                 if(!this.size) {

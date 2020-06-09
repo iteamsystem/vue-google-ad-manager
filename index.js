@@ -52,6 +52,9 @@ export default {
 
     defineOptions(options, Vue){
 
+        // add by iteam
+        if (!options) options = {}
+        
         // If user doesn't pass in ad default size, define default
         if(!options.default_size){
             options.default_size = "rectangle";
