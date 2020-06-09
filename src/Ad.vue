@@ -18,7 +18,7 @@
                 default: 'normal'
             },
             // add by iteam
-            id: {
+            networkCode: {
                 default: ''
             },
             // add by iteam
@@ -39,7 +39,7 @@
         computed: {
             adUnit(){
                 // change by iteam
-                return this.id ? `/${this.id}/${this.unit}` : `/${this.$googlead.id}/${this.unit}`
+                return this.networkCode ? `/${this.networkCode}/${this.unit}` : `/${this.$googlead.id}/${this.unit}`
                 // return `/${this.$googlead.id}/${this.unit}`
             },
             adSize(){
