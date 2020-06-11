@@ -90,7 +90,7 @@
                     this.slot.defineSizeMapping(this.mapping)
                 }
                 this.targetings.forEach(elm => {
-                    googletag.pubads().setTargeting(elm.key, elm.val);
+                    googletag.pubads().setTargeting(elm.key, elm.value);
                 });
 
             },
