@@ -9,12 +9,12 @@ export default {
         rectangle: [ [300, 250], [300, 300], [300, 600]]
     },
 
-    install(Vue, options){
+    install: function(Vue, options){
         Vue.component('google-ad', Ad);
         this.init(options, Vue);
     },
 
-    init(options, Vue){
+    init: function(options, Vue){
 
         // Following Admanagers tag generation - June 6, 2019
 
@@ -38,7 +38,7 @@ export default {
         }
 
         // Define google tag slots
-        googletag.cmd.push(() => {
+        googletag.cmd.push(function() {
 
             // Loop through and define slots
             this.defineOptions(options, Vue);
@@ -46,11 +46,11 @@ export default {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
-        });
+        }.bind(this));
 
     },
 
-    defineOptions(options, Vue){
+    defineOptions: function(options, Vue){
 
         // add by iteam
         if (!options) options = {}
@@ -76,21 +76,21 @@ export default {
 
     },
 
-    createMappings(mappings){
-        Object.keys(mappings).forEach((key) => {
+    createMappings: function(mappings){
+        Object.keys(mappings).forEach(function(key) {
             mappings[key] = this.setSize(mappings[key])
-        });
+        }.bind(this));
 
         return mappings;
     },
 
-    setSize(mapping){
+    setSize: function(mapping){
 
         let mapper = googletag.sizeMapping();
 
-        mapping.forEach((map) => {
+        mapping.forEach(function(map) {
             mapper.addSize(map.window, map.sizes)
-        });
+        }.bind(this));
 
         return mapper.build();
     },
